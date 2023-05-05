@@ -9,3 +9,8 @@ public class VaultKeep
   public Keep Keep { get; set; }
   public Profile Creator { get; set; }
 }
+
+public class KeepInVault : Keep
+{
+  public int VaultKeepId { get; set; }
+}

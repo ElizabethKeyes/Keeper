@@ -29,4 +29,21 @@ public class VaultKeepsController : ControllerBase
       return BadRequest(e.Message);
     }
   }
+
+  [HttpDelete("{vaultKeepId}")]
+  [Authorize]
+  public async Task<ActionResult<string>> DeleteVaultKeep(int vaultKeepId)
+  {
+    try
+    {
+      Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
+      string userId = userInfo.Id;
+      string message = _vaultKeepsService.DeleteVaultKeep(userId, vaultKeepId);
+      return Ok(message);
+    }
+    catch (Exception e)
+    {
+      return BadRequest(e.Message);
+    }
+  }
 }
