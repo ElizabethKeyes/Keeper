@@ -63,4 +63,10 @@ public class KeepsService
     keep.Views++;
     return keep;
   }
+
+  internal List<Keep> GetKeepsByProfileId(string profileId)
+  {
+    List<Keep> keeps = _repo.GetKeepsByProfileId(profileId);
+    return keeps;
+  }
 }

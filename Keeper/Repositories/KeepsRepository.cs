@@ -85,4 +85,17 @@ public class KeepsRepository
     }, new { keepId }).FirstOrDefault();
     return keep;
   }
+
+  internal List<Keep> GetKeepsByProfileId(string profileId)
+  {
+    string sql = @"
+    SELECT
+    *
+    FROM keeps
+    WHERE keeps.creatorId = @profileId;
+    ";
+
+    List<Keep> keeps = _db.Query<Keep>(sql, new { profileId }).ToList();
+    return keeps;
+  }
 }
