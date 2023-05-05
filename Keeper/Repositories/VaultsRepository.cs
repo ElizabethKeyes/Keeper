@@ -24,6 +24,31 @@ public class VaultsRepository
     return id;
   }
 
+  internal void DeleteVault(int vaultId)
+  {
+    string sql = @"
+    DELETE FROM
+    vaults
+    WHERE id = @vaultId;
+    ";
+
+    _db.Execute(sql, new { vaultId });
+  }
+
+  internal void EditVault(Vault ogVault)
+  {
+    string sql = @"
+    UPDATE vaults
+    SET
+    Name = @Name,
+    Description = @Description,
+    Img = @Img
+    WHERE id = @Id;
+    ";
+
+    _db.Execute(sql, ogVault);
+  }
+
   internal Vault GetVaultById(int vaultId)
   {
     string sql = @"
