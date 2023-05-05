@@ -15,7 +15,7 @@ CREATE TABLE keeps(
   img VARCHAR(500) NOT NULL,
   views INT NOT NULL DEFAULT 0,
 
-  FOREIGN KEY (creatorId) REFERENCES accounts(id)
+  FOREIGN KEY (creatorId) REFERENCES accounts(id) ON DELETE CASCADE
 ) default charset utf8mb4 COMMENT '';
 
 CREATE TABLE vaults(
@@ -26,5 +26,16 @@ CREATE TABLE vaults(
   img VARCHAR(500) NOT NULL,
   isPrivate BOOLEAN NOT NULL,
 
-  FOREIGN KEY (creatorId) REFERENCES accounts(id)
+  FOREIGN KEY (creatorId) REFERENCES accounts(id) ON DELETE CASCADE
+) default charset utf8mb4 COMMENT '';
+
+CREATE TABLE vaultKeeps(
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT "Primary Key",
+  vaultId INT NOT NULL,
+  keepId INT NOT NULL,
+  creatorId VARCHAR(255) NOT NULL,
+
+  FOREIGN KEY (vaultId) REFERENCES vaults(id) ON DELETE CASCADE,
+  FOREIGN KEY (keepId) REFERENCES keeps(id) ON DELETE CASCADE,
+  FOREIGN KEY (creatorId) REFERENCES accounts(id) ON DELETE CASCADE
 ) default charset utf8mb4 COMMENT '';
