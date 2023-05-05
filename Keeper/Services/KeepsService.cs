@@ -60,6 +60,7 @@ public class KeepsService
     {
       throw new Exception($"Invalid Keep ID: {keepId}");
     }
+    keep.Views++;
     return keep;
   }
 }

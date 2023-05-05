@@ -17,3 +17,14 @@ CREATE TABLE keeps(
 
   FOREIGN KEY (creatorId) REFERENCES accounts(id)
 ) default charset utf8mb4 COMMENT '';
+
+CREATE TABLE vaults(
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT "Primary Key",
+  creatorId VARCHAR(255) NOT NULL,
+  name VARCHAR(100) NOT NULL,
+  description VARCHAR(500) NOT NULL,
+  img VARCHAR(500) NOT NULL,
+  isPrivate BOOLEAN NOT NULL,
+
+  FOREIGN KEY (creatorId) REFERENCES accounts(id)
+) default charset utf8mb4 COMMENT '';
