@@ -31,6 +31,37 @@ public class KeepsController : ControllerBase
     }
   }
 
+  [HttpPut("{keepId}")]
+  [Authorize]
+  public async Task<ActionResult<Keep>> EditKeep([FromBody] Keep keepData, int keepId)
+  {
+    try
+    {
+      Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
+      string userId = userInfo.Id;
+      Keep keep = _keepsService.EditKeep(userId, keepId, keepData);
+      return Ok(keep);
+    }
+    catch (Exception e)
+    {
+      return BadRequest(e.Message);
+    }
+  }
+
+  [HttpGet]
+  public ActionResult<List<Keep>> GetAllKeeps()
+  {
+    try
+    {
+      List<Keep> keeps = _keepsService.GetAllKeeps();
+      return Ok(keeps);
+    }
+    catch (Exception e)
+    {
+      return BadRequest(e.Message);
+    }
+  }
+
   [HttpGet("{keepId}")]
   public ActionResult<Keep> GetKeepById(int keepId)
   {

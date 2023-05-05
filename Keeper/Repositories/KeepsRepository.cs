@@ -24,6 +24,39 @@ public class KeepsRepository
     return keepId;
   }
 
+  internal void EditKeep(Keep ogKeep)
+  {
+    string sql = @"
+    UPDATE keeps
+    SET
+    Description = @Description,
+    Img = @Img,
+    Name = @Name
+    WHERE id = @Id;
+    ";
+
+    _db.Execute(sql, ogKeep);
+  }
+
+  internal List<Keep> GetAllKeeps()
+  {
+    string sql = @"
+    SELECT
+    keeps.*,
+    accounts.*
+    FROM keeps
+    JOIN accounts ON accounts.id = keeps.creatorId;
+    ";
+
+    List<Keep> keeps = _db.Query<Keep, Profile, Keep>(sql, (keep, account) =>
+    {
+      keep.Creator = account;
+      return keep;
+    }).ToList();
+
+    return keeps;
+  }
+
   internal Keep GetKeepById(int keepId)
   {
     string sql = @"
