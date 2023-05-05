@@ -9,13 +9,21 @@ public class VaultKeepsService
     _repo = repo;
   }
 
-  internal VaultKeep CreateVaultKeep(VaultKeep vaultKeepData, string userId)
+  internal VaultKeep CreateVaultKeep(VaultKeep vaultKeepData, string userId, Vault vault)
   {
-    vaultKeepData.CreatorId = userId;
-    int vaultKeepId = _repo.CreateVaultKeep(vaultKeepData);
-    VaultKeep vaultKeep = GetVaultKeepById(vaultKeepId);
-    return vaultKeep;
+    if (vault.CreatorId == userId)
+    {
+      vaultKeepData.CreatorId = userId;
+      int vaultKeepId = _repo.CreateVaultKeep(vaultKeepData);
+      VaultKeep vaultKeep = GetVaultKeepById(vaultKeepId);
+      return vaultKeep;
+    }
+    else
+    {
+      throw new Exception("You are not permitted to add to another user's Vault.");
+    }
   }
+  // find the vault itself and verify that the user adding to the vault is the creator of the vault
 
   internal string DeleteVaultKeep(string userId, int vaultKeepId)
   {
