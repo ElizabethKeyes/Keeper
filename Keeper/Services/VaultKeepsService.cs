@@ -23,7 +23,6 @@ public class VaultKeepsService
       throw new Exception("You are not permitted to add to another user's Vault.");
     }
   }
-  // find the vault itself and verify that the user adding to the vault is the creator of the vault
 
   internal string DeleteVaultKeep(string userId, int vaultKeepId)
   {

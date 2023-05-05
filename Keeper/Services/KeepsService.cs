@@ -11,8 +11,8 @@ public class KeepsService
 
   internal Keep CreateKeep(Keep keepData)
   {
-    int keepId = _repo.CreateKeep(keepData);
-    Keep keep = GetKeepById(keepId);
+    Keep keep = _repo.CreateKeep(keepData);
+    // Keep keep = GetKeepById(keepId);
     return keep;
   }
 
@@ -61,6 +61,7 @@ public class KeepsService
       throw new Exception($"Invalid Keep ID: {keepId}");
     }
     keep.Views++;
+    _repo.EditKeep(keep);
     return keep;
   }
 

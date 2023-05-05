@@ -39,3 +39,27 @@ CREATE TABLE vaultKeeps(
   FOREIGN KEY (keepId) REFERENCES keeps(id) ON DELETE CASCADE,
   FOREIGN KEY (creatorId) REFERENCES accounts(id) ON DELETE CASCADE
 ) default charset utf8mb4 COMMENT '';
+
+  SELECT
+    keeps.*,
+    COUNT(vaultKeeps.id) AS kept,
+    accounts.*
+    FROM keeps
+    JOIN accounts ON accounts.id = keeps.creatorId
+    LEFT JOIN vaultKeeps ON vaultKeeps.keepId = keeps.id
+    GROUP BY (keeps.id);
+
+    INSERT INTO keeps
+    (creatorId, name, description, img)
+    VALUES
+    ("641dcead96ec6728cb1f8b95", "Testing Keep", "This is a test keep.", "https://images.unsplash.com/photo-1583394885876-f7744b77051f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=436&q=80");
+
+    SELECT
+    keeps.*,
+    COUNT(vaultKeeps.id) AS kept,
+    accounts.*
+    FROM keeps
+    JOIN accounts ON accounts.id = keeps.creatorId
+    LEFT JOIN vaultKeeps ON vaultKeeps.keepId = keeps.id
+    WHERE keeps.id = LAST_INSERT_ID()
+    GROUP BY (keeps.id);

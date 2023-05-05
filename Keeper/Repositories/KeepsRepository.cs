@@ -9,7 +9,7 @@ public class KeepsRepository
     _db = db;
   }
 
-  internal int CreateKeep(Keep keepData)
+  internal Keep CreateKeep(Keep keepData)
   {
     string sql = @"
     INSERT INTO keeps
@@ -17,11 +17,23 @@ public class KeepsRepository
     VALUES
     (@CreatorId, @Name, @Description, @Img);
 
-    SELECT LAST_INSERT_ID();
+    SELECT
+    keeps.*,
+    COUNT(vaultKeeps.id) AS kept,
+    accounts.*
+    FROM keeps
+    JOIN accounts ON accounts.id = keeps.creatorId
+    LEFT JOIN vaultKeeps ON vaultKeeps.keepId = keeps.id
+    WHERE keeps.id = LAST_INSERT_ID()
+    GROUP BY (keeps.id);
     ";
 
-    int keepId = _db.ExecuteScalar<int>(sql, keepData);
-    return keepId;
+    Keep keep = _db.Query<Keep, Profile, Keep>(sql, (keep, account) =>
+    {
+      keep.Creator = account;
+      return keep;
+    }, keepData).FirstOrDefault();
+    return keep;
   }
 
   internal void DeleteKeep(int keepId)
@@ -42,7 +54,8 @@ public class KeepsRepository
     SET
     Description = @Description,
     Img = @Img,
-    Name = @Name
+    Name = @Name,
+    Views = @Views
     WHERE id = @Id;
     ";
 
@@ -54,9 +67,12 @@ public class KeepsRepository
     string sql = @"
     SELECT
     keeps.*,
+    COUNT(vaultKeeps.id) AS kept,
     accounts.*
     FROM keeps
-    JOIN accounts ON accounts.id = keeps.creatorId;
+    JOIN accounts ON accounts.id = keeps.creatorId
+    LEFT JOIN vaultKeeps ON vaultKeeps.keepId = keeps.id
+    GROUP BY (keeps.id);
     ";
 
     List<Keep> keeps = _db.Query<Keep, Profile, Keep>(sql, (keep, account) =>
@@ -73,10 +89,14 @@ public class KeepsRepository
     string sql = @"
     SELECT
     keeps.*,
+    COUNT(vaultKeeps.id) AS kept,
     accounts.*
     FROM keeps
     JOIN accounts ON accounts.id = keeps.creatorId
-    WHERE keeps.id = @keepId;";
+    LEFT JOIN vaultKeeps ON vaultKeeps.keepId = keeps.id
+    WHERE keeps.id = @keepId
+    GROUP BY (keeps.id);
+    ";
 
     Keep keep = _db.Query<Keep, Profile, Keep>(sql, (keep, account) =>
     {
@@ -90,9 +110,12 @@ public class KeepsRepository
   {
     string sql = @"
     SELECT
-    *
+    keeps.*,
+    COUNT(vaultKeeps.id) AS kept
     FROM keeps
-    WHERE keeps.creatorId = @profileId;
+    LEFT JOIN vaultKeeps ON vaultKeeps.keepId = keeps.id
+    WHERE keeps.creatorId = @profileId
+    GROUP BY(keeps.id);
     ";
 
     List<Keep> keeps = _db.Query<Keep>(sql, new { profileId }).ToList();
