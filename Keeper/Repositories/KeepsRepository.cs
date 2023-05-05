@@ -24,6 +24,17 @@ public class KeepsRepository
     return keepId;
   }
 
+  internal void DeleteKeep(int keepId)
+  {
+    string sql = @"
+    DELETE FROM
+    keeps
+    WHERE id = @keepId;
+    ";
+
+    _db.Execute(sql, new { keepId });
+  }
+
   internal void EditKeep(Keep ogKeep)
   {
     string sql = @"
