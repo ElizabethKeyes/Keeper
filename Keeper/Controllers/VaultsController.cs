@@ -5,12 +5,14 @@ namespace Keeper.Controllers;
 public class VaultsController : ControllerBase
 {
   private readonly VaultsService _vaultsService;
+  private readonly VaultKeepsService _vaultKeepsService;
   private readonly Auth0Provider _auth;
 
-  public VaultsController(VaultsService vaultsService, Auth0Provider auth)
+  public VaultsController(VaultsService vaultsService, Auth0Provider auth, VaultKeepsService vaultKeepsService)
   {
     _vaultsService = vaultsService;
     _auth = auth;
+    _vaultKeepsService = vaultKeepsService;
   }
 
   [HttpPost]
@@ -71,6 +73,21 @@ public class VaultsController : ControllerBase
     {
       Vault vault = _vaultsService.GetVaultById(vaultId);
       return Ok(vault);
+    }
+    catch (Exception e)
+    {
+      return BadRequest(e.Message);
+    }
+  }
+
+  [HttpGet("{vaultId}/keeps")]
+  public ActionResult<List<VaultKeep>> GetVaultKeepsByVaultId(int vaultId)
+  {
+    try
+    {
+      Vault vault = _vaultsService.GetVaultById(vaultId);
+      List<VaultKeep> vaultKeeps = _vaultKeepsService.GetVaultKeepsByVaultId(vaultId);
+      return Ok(vaultKeeps);
     }
     catch (Exception e)
     {
