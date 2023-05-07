@@ -16,7 +16,8 @@
 import { logger } from "../utils/Logger.js";
 import Pop from "../utils/Pop.js";
 import { keepsService } from "../services/KeepsService.js"
-import { computed, onMounted } from "vue";
+import { vaultsService } from "../services/VaultsService.js"
+import { computed, onMounted, watchEffect } from "vue";
 import { AppState } from "../AppState.js";
 import KeepsCard from "../components/KeepsCard.vue"
 import ActiveKeepModal from "../components/ActiveKeepModal.vue";
@@ -24,7 +25,6 @@ import ActiveKeepModal from "../components/ActiveKeepModal.vue";
 export default {
 
   setup() {
-    let screenWidth = 0
     async function GetAllKeeps() {
       try {
         await keepsService.GetAllKeeps()
@@ -34,9 +34,24 @@ export default {
       }
     }
 
+    async function GetMyVaults() {
+      try {
+        const userId = AppState.account.id
+        await vaultsService.GetMyVaults(userId)
+      } catch (error) {
+        logger.error(error)
+        Pop.error(error.message)
+      }
+    }
 
     onMounted(() => {
       GetAllKeeps()
+    })
+
+    watchEffect(() => {
+      if (AppState.account) {
+        GetMyVaults()
+      }
     })
 
     return {

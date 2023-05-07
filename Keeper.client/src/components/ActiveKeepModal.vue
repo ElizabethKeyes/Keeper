@@ -7,17 +7,27 @@
             <img :src="keep.img" :alt="'a photo of ' + keep.name" class="keep-photo">
           </div>
           <div class="col-md-6 p-0 text-col">
-            <div class="text-secondary mt-2 d-flex justify-content-center">
-              <h6 class="me-3"><i class="mdi mdi-eye-outline me-1"></i>{{ keep.views }}</h6>
+            <div class="text-secondary mt-4 d-flex align-items-center justify-content-center">
+              <h6 class="me-3 mb-0"><i class="mdi mdi-eye-outline me-1"></i>{{ keep.views }}</h6>
               <img src="../assets/img/keeps.png" alt="keeper logo" class="kept-icon me-1">
-              <h6>{{ keep.kept }}</h6>
+              <h6 class="mb-0">{{ keep.kept }}</h6>
             </div>
             <div>
               <h2 class="title-text">{{ keep.name }}</h2>
               <p class="description-text">{{ keep.description }}</p>
             </div>
-            <div>
-              Create
+            <div class="mb-4 d-flex justify-content-between">
+              <form name="addToVault" class="d-flex ms-3" @submit.prevent="addToVault()">
+                <select name="vault" id="vault" class="form-control my-input me-2" required v-model="editable.vault">
+                  <!-- <option hidden selected disabled>-select a vault-</option> -->
+                  <option v-for="v in vaults" :value="v.id">{{ v.name }}</option>
+                </select>
+                <button type="submit" class="btn save-btn text-light">save</button>
+              </form>
+              <div class="d-flex align-items-center me-3">
+                <img :src="keep.creator.picture" :alt="'a photo of ' + keep.creator.name" class="profile-pic">
+                <h6 class="creator-name">{{ keep.creator.name }}</h6>
+              </div>
             </div>
           </div>
         </div>
@@ -28,13 +38,29 @@
 
 
 <script>
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { AppState } from "../AppState.js";
+import { logger } from "../utils/Logger.js";
+import Pop from "../utils/Pop.js";
+import { vaultsService } from "../services/VaultsService.js";
 
 export default {
   setup() {
+    const editable = ref({})
     return {
-      keep: computed(() => AppState.activeKeep)
+      editable,
+      keep: computed(() => AppState.activeKeep),
+      vaults: computed(() => AppState.myVaults),
+
+      async addToVault() {
+        try {
+          const vaultId = editable.value.vault
+          await vaultsService.addToVault(vaultId, AppState.activeKeep.id)
+        } catch (error) {
+          logger.log(error)
+          Pop.error(error.message)
+        }
+      }
     }
   }
 }
@@ -77,7 +103,36 @@ export default {
 .kept-icon {
   object-fit: cover;
   object-position: center;
-  height: 3vh;
-  width: 3vh;
+  height: 2vh;
+  width: 2vh;
+}
+
+.save-btn {
+  background-color: rgba(135, 122, 143, 1);
+}
+
+.save-btn:hover {
+  border: rgba(135, 122, 143, 1) solid 1px;
+  color: black !important
+}
+
+.profile-pic {
+  height: 5vh;
+  width: 5vh;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 100%;
+}
+
+.creator-name {
+  margin-bottom: 0px;
+  font-weight: bold;
+}
+
+.my-input {
+  border: none !important;
+  border-bottom: gray 2px solid !important;
+  background-color: rgba(254, 246, 240, 1);
+  border-radius: 0px
 }
 </style>

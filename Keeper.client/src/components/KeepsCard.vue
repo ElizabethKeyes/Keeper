@@ -2,7 +2,7 @@
   <img :src="keep.img" :alt="'a photo of ' + keep.name" class="keeps-photos">
   <div class="title-container">
     <h5 class="keeps-title">{{ keep.name }}</h5>
-    <img :src="keep.creator.picture" :alt="'a photo of ' + keep.creator.name">
+    <img :src="keep.creator.picture" :alt="'a photo of ' + keep.creator.name" :title="keep.creator.name">
   </div>
 </template>
 
