@@ -2,16 +2,14 @@
   <div class="container-fluid">
     <section class="row mt-3 overflow-hidden">
       <div class="masonry-with-columns">
-        <div v-for="k in keeps" :key="k.id" class="keeps-card">
-          <img :src="k.img" :alt="'a photo of ' + k.name" class="keeps-photos">
-          <div class="title-container">
-            <h5 class="keeps-title">{{ k.name }}</h5>
-            <img :src="k.creator.picture" :alt="'a photo of ' + k.creator.name">
-          </div>
+        <div v-for="k in keeps" :key="k.id" class="keeps-card elevation-4" @click="setActiveKeep(k.id)"
+          data-bs-toggle="modal" data-bs-target="#activeKeepModal">
+          <KeepsCard :keep="k" />
         </div>
       </div>
     </section>
   </div>
+  <ActiveKeepModal />
 </template>
 
 <script>
@@ -20,6 +18,8 @@ import Pop from "../utils/Pop.js";
 import { keepsService } from "../services/KeepsService.js"
 import { computed, onMounted } from "vue";
 import { AppState } from "../AppState.js";
+import KeepsCard from "../components/KeepsCard.vue"
+import ActiveKeepModal from "../components/ActiveKeepModal.vue";
 
 export default {
 
@@ -41,8 +41,12 @@ export default {
 
     return {
       keeps: computed(() => AppState.keeps),
+      async setActiveKeep(keepId) {
+        await keepsService.setActiveKeep(keepId)
+      }
     }
-  }
+  },
+  components: { KeepsCard, ActiveKeepModal }
 }
 </script>
 
@@ -63,47 +67,17 @@ export default {
     font-family: system-ui;
     font-weight: 900;
     font-size: 2rem;
+    border-radius: 8px;
   }
-}
-
-
-.keeps-photos {
-  object-fit: cover;
-  object-position: center;
-  width: 100%;
-  border-radius: 8px;
 }
 
 .keeps-card {
   position: relative;
 }
 
-.title-container {
-  position: absolute;
-  bottom: 0px;
-  left: 0px;
-  right: 0px;
-  display: flex;
-  justify-content: space-between;
-  padding-left: .5em;
-  padding-right: .5em;
-  padding-bottom: .25em;
-  align-items: center;
-}
-
-.title-container img {
-  height: 5vh;
-  width: 5vh;
-  border-radius: 100%;
-  object-fit: cover;
-  object-position: center;
-}
-
-.keeps-title {
-  font-family: 'Marko One', serif;
-  margin-bottom: 0px;
-  text-shadow: 1px 1px 2px black;
-  color: rgba(255, 255, 255);
+.keeps-card:hover {
+  cursor: pointer;
+  transform: scale(1.025);
 
 }
 
