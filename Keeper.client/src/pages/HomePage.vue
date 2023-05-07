@@ -49,7 +49,9 @@ export default {
 <style scoped lang="scss">
 .masonry-with-columns {
   columns: 4 200px;
-  column-gap: 1rem;
+  column-gap: 2rem;
+  padding-left: 3em;
+  padding-right: 3em;
 
   .keeps-card {
     width: 150px;
@@ -100,7 +102,9 @@ export default {
 .keeps-title {
   font-family: 'Marko One', serif;
   margin-bottom: 0px;
-  text-shadow: 1px 1px 2px black
+  text-shadow: 1px 1px 2px black;
+  color: rgba(255, 255, 255);
+
 }
 
 

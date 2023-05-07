@@ -5,8 +5,8 @@
   <main>
     <router-view />
   </main>
-  <footer class="bg-dark text-light">
-    Made with 💖 by CodeWorks
+  <footer>
+    Made with 📸 by Elizabeth
   </footer>
 </template>
 
@@ -39,6 +39,10 @@ main {
 footer {
   display: grid;
   place-content: center;
-  height: 32px;
+  height: 48px;
+  background-color: #fcf6f1;
+  border-top: solid #E5E5E5 2px;
+  font-family: 'Oxygen', sans-serif;
+
 }
 </style>
