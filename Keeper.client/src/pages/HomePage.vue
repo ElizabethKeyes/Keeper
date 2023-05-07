@@ -1,28 +1,16 @@
 <template>
   <div class="container-fluid">
-    <section class="row mt-3">
-      <div class="col-3">
-        <div v-for="k in keeps1[1]" :key="k.id" class="keeps-card">
-          <img :src="k.img" :alt="'a photo of ' + k.name" class="keeps-img">
-        </div>
-      </div>
-      <div class="col-3">
-        <div v-for="k in keeps1[2]" :key="k.id" class="keeps-card">
-          <img :src="k.img" :alt="'a photo of ' + k.name" class="keeps-img">
-        </div>
-      </div>
-      <div class="col-3">
-        <div v-for="k in keeps1[3]" :key="k.id" class="keeps-card">
-          <img :src="k.img" :alt="'a photo of ' + k.name" class="keeps-img">
-        </div>
-      </div>
-      <div class="col-3">
-        <div v-for="k in keeps1[4]" :key="k.id" class="keeps-card">
-          <img :src="k.img" :alt="'a photo of ' + k.name" class="keeps-img">
+    <section class="row mt-3 overflow-hidden">
+      <div class="masonry-with-columns">
+        <div v-for="k in keeps" :key="k.id" class="keeps-card">
+          <img :src="k.img" :alt="'a photo of ' + k.name" class="keeps-photos">
+          <div class="title-container">
+            <h5 class="keeps-title">{{ k.name }}</h5>
+            <img :src="k.creator.picture" :alt="'a photo of ' + k.creator.name">
+          </div>
         </div>
       </div>
     </section>
-    {{ keeps1 }}
   </div>
 </template>
 
@@ -36,6 +24,7 @@ import { AppState } from "../AppState.js";
 export default {
 
   setup() {
+    let screenWidth = 0
     async function GetAllKeeps() {
       try {
         await keepsService.GetAllKeeps()
@@ -45,51 +34,79 @@ export default {
       }
     }
 
+
     onMounted(() => {
       GetAllKeeps()
     })
 
     return {
       keeps: computed(() => AppState.keeps),
-      keeps1: computed(() => {
-        const length = AppState.keeps.length
-        const keeps = {
-          1: [],
-          2: [],
-          3: [],
-          4: []
-        }
-        for (let i = 0; i < (length); i++) {
-          if (i < length / 4) {
-            keeps[1].push(AppState.keeps[i])
-          } else if (i < length / 2) {
-            keeps[2].push(AppState.keeps[i])
-          } else if (i < length / 1.33) {
-            keeps[3].push(AppState.keeps[i])
-          } else {
-            keeps[4].push(AppState.keeps[i])
-          }
-        }
-        logger.log('[KEEPS OBJECT]', keeps)
-        return keeps
-      }),
-
     }
   }
 }
 </script>
 
 <style scoped lang="scss">
-.keeps-card {
-  border-radius: 5px;
-  margin-bottom: 1em;
+.masonry-with-columns {
+  columns: 4 200px;
+  column-gap: 1rem;
+
+  .keeps-card {
+    width: 150px;
+    color: white;
+    margin: 0 1rem 1rem 0;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    font-family: system-ui;
+    font-weight: 900;
+    font-size: 2rem;
+  }
 }
 
-.keeps-img {
+
+.keeps-photos {
   object-fit: cover;
   object-position: center;
   width: 100%;
-  border-radius: 5px;
+  border-radius: 8px;
+}
 
+.keeps-card {
+  position: relative;
+}
+
+.title-container {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  display: flex;
+  justify-content: space-between;
+  padding-left: .5em;
+  padding-right: .5em;
+  padding-bottom: .25em;
+  align-items: center;
+}
+
+.title-container img {
+  height: 5vh;
+  width: 5vh;
+  border-radius: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.keeps-title {
+  font-family: 'Marko One', serif;
+  margin-bottom: 0px;
+  text-shadow: 1px 1px 2px black
+}
+
+
+@media screen and (max-width: 768px) {
+  .masonry-with-columns {
+    columns: 2 100px;
+  }
 }
 </style>

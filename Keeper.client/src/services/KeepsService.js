@@ -7,7 +7,6 @@ class KeepsService {
   async GetAllKeeps() {
     const res = await api.get(`api/keeps`)
     AppState.keeps = res.data.map(k => new Keep(k))
-    logger.log('[CLASSED KEEPS]', AppState.keeps)
   }
 }
 
