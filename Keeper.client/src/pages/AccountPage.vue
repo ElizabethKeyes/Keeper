@@ -10,6 +10,8 @@
       <div class="col-md-10 d-flex flex-column align-items-center buffer">
         <h2>{{ account.name }}</h2>
         <h5>{{ myVaults.length }} Vaults | {{ myKeeps.length }} Keeps</h5>
+        <button class="btn btn-outline-dark edit-profile-btn" data-bs-toggle="modal"
+          data-bs-target="#editProfileModal">Edit Profile</button>
       </div>
       <div class="col-md-10 mt-3">
         <h3 class="mb-3">Vaults</h3>
@@ -19,7 +21,7 @@
           </div>
         </section>
       </div>
-      <div class="col-md-10 mt-3">
+      <div class="col-md-10 mt-5">
         <h3 class="mb-3">Keeps</h3>
         <section class="row">
           <div class="masonry-with-columns">
@@ -33,6 +35,15 @@
     </section>
   </div>
   <ActiveKeepModal />
+
+  <Modal id="editProfileModal">
+    <template #header>
+      Edit your account
+    </template>
+    <template #body>
+      <EditAccountForm />
+    </template>
+  </Modal>
 </template>
 
 <script>
@@ -45,6 +56,8 @@ import { vaultsService } from "../services/VaultsService.js"
 import VaultCard from "../components/VaultCard.vue"
 import KeepsCard from "../components/KeepsCard.vue"
 import ActiveKeepModal from "../components/ActiveKeepModal.vue"
+import Modal from "../components/Modal.vue"
+import EditAccountForm from "../components/EditAccountForm.vue"
 
 export default {
   setup() {
@@ -86,7 +99,7 @@ export default {
       },
     }
   },
-  components: { VaultCard, KeepsCard, ActiveKeepModal }
+  components: { VaultCard, KeepsCard, ActiveKeepModal, Modal, EditAccountForm }
 }
 </script>
 
