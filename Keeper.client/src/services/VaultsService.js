@@ -10,7 +10,11 @@ class VaultsService {
     AppState.myVaults = res.data.map(v => new Vault(v))
   }
 
-
+  async createVault(vaultData) {
+    const res = await api.post(`api/vaults`, vaultData)
+    AppState.myVaults.push(new Vault(res.data))
+    logger.log(res.data)
+  }
 }
 
 export const vaultsService = new VaultsService();

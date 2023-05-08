@@ -15,10 +15,9 @@
             You forgot the body!
           </slot>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
+        <!-- <div class="modal-footer">
+          <button type="submit" class="btn btn-dark">Create</button>
+        </div> -->
       </div>
     </div>
   </div>
@@ -30,4 +29,20 @@ const props = defineProps({ size: { type: String, default: 'modal-md' } })
 </script>
 
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.modal-content {
+  background-color: rgba(249, 246, 250, 1)
+}
+
+.modal-header {
+  border-bottom: none;
+}
+
+.modal-title {
+  color: rgba(99, 110, 114, 1)
+}
+
+.modal-footer {
+  border-top: none;
+}
+</style>
