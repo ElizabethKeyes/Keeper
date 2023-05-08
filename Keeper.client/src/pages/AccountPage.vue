@@ -22,14 +22,17 @@
       <div class="col-md-10 mt-3">
         <h3 class="mb-3">Keeps</h3>
         <section class="row">
-          <div v-for="k in myKeeps" :key="k.id" class="col-md-3 col-6">
-            <!-- insert keeps component here -->
-            <!-- TODO need to make keeps component next -->
+          <div class="masonry-with-columns">
+            <div v-for="k in myKeeps" :key="k.id" class="keeps-card elevation-4" @click="setActiveKeep(k.id)"
+              data-bs-toggle="modal" data-bs-target="#activeKeepModal">
+              <KeepsCard :keep="k" />
+            </div>
           </div>
         </section>
       </div>
     </section>
   </div>
+  <ActiveKeepModal />
 </template>
 
 <script>
@@ -40,6 +43,8 @@ import { logger } from "../utils/Logger.js"
 import Pop from "../utils/Pop.js"
 import { vaultsService } from "../services/VaultsService.js"
 import VaultCard from "../components/VaultCard.vue"
+import KeepsCard from "../components/KeepsCard.vue"
+import ActiveKeepModal from "../components/ActiveKeepModal.vue"
 
 export default {
   setup() {
@@ -75,9 +80,13 @@ export default {
       account: computed(() => AppState.account),
       myVaults: computed(() => AppState.myVaults),
       myKeeps: computed(() => AppState.keeps.filter(k => k.creatorId == AppState.account.id)),
+
+      async setActiveKeep(keepId) {
+        await keepsService.setActiveKeep(keepId)
+      },
     }
   },
-  components: { VaultCard }
+  components: { VaultCard, KeepsCard, ActiveKeepModal }
 }
 </script>
 
@@ -111,5 +120,43 @@ export default {
 
 .buffer {
   margin-top: 8vh;
+}
+
+
+.masonry-with-columns {
+  columns: 4 200px;
+  column-gap: 2rem;
+  padding-top: 1em;
+}
+
+.keeps-card {
+  width: 150px;
+  color: white;
+  margin: 0 1rem 1rem 0;
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  font-family: system-ui;
+  font-weight: 900;
+  font-size: 2rem;
+  border-radius: 8px;
+}
+
+.keeps-card {
+  position: relative;
+}
+
+.keeps-card:hover {
+  cursor: pointer;
+  transform: scale(1.025);
+}
+
+
+@media screen and (max-width: 768px) {
+  .masonry-with-columns {
+    columns: 2 100px;
+    padding-left: 1em;
+    padding-right: 1em;
+  }
 }
 </style>
