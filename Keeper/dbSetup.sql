@@ -63,3 +63,6 @@ CREATE TABLE vaultKeeps(
     LEFT JOIN vaultKeeps ON vaultKeeps.keepId = keeps.id
     WHERE keeps.id = LAST_INSERT_ID()
     GROUP BY (keeps.id);
+
+    ALTER TABLE accounts
+    ADD COLUMN coverImg VARCHAR(500) NOT NULL DEFAULT 'https://s3-alpha-sig.figma.com/img/1858/ed47/bf0671ea1f01e751e13a135a41f105db?Expires=1684713600&Signature=JNvBhsnat6eVA1QLCK422CRtOPX1pr~VvHKY4Lx6WM-D93Fhtzg7TRYxl4eb4MPz4iX3fHBSxlffKcSiSiWJMYmC7rlhvrMfkY6XBxat38s4jJqZEJdx2DeKd2w5xnkbRJAw~-Y7wBV6idPLMLBYzScXNoKwHLYvTpna7VydJC7cTTJ63oz8B38eimYfN76n49QFSpKVYZ2nFlnFH6EI65C5CmQZtcslby1rA9gcJXCcyRHdGNfq6rctP5a4veVgt9aKj29XXc1WECnP1Cqmh8fewJVDcwNeQBdmkRWWWSvTDBR7CABJjyvV4vRrY3GtIJiPGVvi6dNyHMYvswZTPQ__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4';

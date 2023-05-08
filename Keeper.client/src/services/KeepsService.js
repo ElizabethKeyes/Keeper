@@ -27,7 +27,7 @@ class KeepsService {
     const res = await api.delete(`api/keeps/${keepId}`)
     logger.log(res.data)
     Modal.getOrCreateInstance("#activeKeepModal").hide()
-    const foundIndex = AppState.keeps.find(k => k.id == keepId)
+    const foundIndex = AppState.keeps.findIndex(k => k.id == keepId)
     AppState.keeps.splice(foundIndex, 1)
   }
 }
