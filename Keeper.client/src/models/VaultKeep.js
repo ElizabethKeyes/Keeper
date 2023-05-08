@@ -11,3 +11,10 @@ export class VaultKeep {
     this.creator = data.creator ? new Profile(data.creator) : null
   }
 }
+
+export class KeepInVault extends Keep {
+  constructor(data) {
+    super(data)
+    this.vaultKeepId = data.vaultKeepId
+  }
+}

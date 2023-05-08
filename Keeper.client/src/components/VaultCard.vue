@@ -1,11 +1,13 @@
 <template>
-  <div class="vault-card elevation-4" :style="{ backgroundImage: `url(${vault.img})` }">
-    <div class="d-flex justify-content-between w-100">
-      <h4 class="vault-font">{{ vault.name }}</h4>
-      <img v-if="vault.isPrivate" class="private-icon" src="../assets/img/isPrivate.svg" title="Private Vault"
-        alt="a lock icon, this vault is private">
+  <router-link :to="{ name: 'VaultDetailsPage', params: { vaultId: vault.id } }">
+    <div class="vault-card elevation-4" :style="{ backgroundImage: `url(${vault.img})` }">
+      <div class="d-flex justify-content-between w-100">
+        <h4 class="vault-font">{{ vault.name }}</h4>
+        <img v-if="vault.isPrivate" class="private-icon" src="../assets/img/isPrivate.svg" title="Private Vault"
+          alt="a lock icon, this vault is private">
+      </div>
     </div>
-  </div>
+  </router-link>
 </template>
 
 
