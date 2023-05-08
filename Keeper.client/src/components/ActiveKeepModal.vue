@@ -25,6 +25,7 @@
                   </select>
                   <button type="submit" class="btn save-btn text-light">save</button>
                 </form>
+                <small class="text-secondary ms-3">Select a vault to save this keep</small>
               </div>
               <div class="d-flex align-items-center justify-content-end me-3 col-4">
                 <img :src="keep.creator.picture" :alt="'a photo of ' + keep.creator.name" class="profile-pic">
@@ -130,6 +131,7 @@ export default {
 
 .creator-name {
   margin-bottom: 0px;
+  margin-left: .5em;
   font-weight: bold;
 }
 
