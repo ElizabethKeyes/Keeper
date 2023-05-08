@@ -63,6 +63,7 @@ export default {
         try {
           const accountData = editable.value
           await accountService.editAccount(accountData)
+          // TODO need to come back to this once I have back end support for editing account
         } catch (error) {
           logger.log(error)
           Pop.error(error.message)
