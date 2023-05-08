@@ -11,7 +11,7 @@
           Create
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-          <li><a class="dropdown-item" href="#">new keep</a></li>
+          <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#createKeepModal">new keep</a></li>
           <hr>
           <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#createVaultModal">new vault</a>
           </li>
@@ -25,6 +25,7 @@
       <Login />
     </div>
   </nav>
+
   <Modal id="createVaultModal">
     <template #header>
       Add your vault
@@ -33,9 +34,19 @@
       <CreateVaultForm />
     </template>
   </Modal>
+
+  <Modal id="createKeepModal">
+    <template #header>
+      Add your keep
+    </template>
+    <template #body>
+      <CreateKeepForm />
+    </template>
+  </Modal>
 </template>
 
 <script>
+import CreateKeepForm from "./CreateKeepForm.vue";
 import CreateVaultForm from "./CreateVaultForm.vue";
 import Login from './Login.vue'
 import Modal from "./Modal.vue";
@@ -43,7 +54,7 @@ export default {
   setup() {
     return {}
   },
-  components: { Login, Modal, CreateVaultForm }
+  components: { Login, Modal, CreateVaultForm, CreateKeepForm }
 }
 </script>
 
