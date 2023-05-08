@@ -5,6 +5,9 @@
         <div class="modal-body row">
           <button @click="deleteKeep(keep.id, keep.name)" v-if="account.id == keep.creator.id" class="btn delete-btn"
             title="Delete Keep"><i class="mdi mdi-delete text-danger"></i></button>
+          <button class="btn remove-btn" title="Remove From Vault" @click="removeKeepFromVault(keep.id, keep.name)"
+            v-if="account.id && route.name == 'VaultDetailsPage'"><i
+              class="mdi mdi-bookmark-remove text-danger"></i></button>
           <div class="col-md-6 p-0">
             <img :src="keep.img" :alt="'a photo of ' + keep.name" class="keep-photo">
           </div>
@@ -20,14 +23,15 @@
             </div>
             <section class="mb-4 row justify-content-between">
               <div class="col-7">
-                <form v-if="account.id" name="addToVault" class="d-flex ms-3" @submit.prevent="addToVault()">
+                <form v-if="account.id && route.name == 'Home'" name="addToVault" class="d-flex ms-3"
+                  @submit.prevent="addToVault()">
                   <select name="vault" id="vault" class="form-control my-input me-2" required v-model="editable.vault">
                     <!-- <option hidden selected disabled>-select a vault-</option> -->
                     <option v-for="v in vaults" :value="v.id">{{ v.name }}</option>
                   </select>
                   <button type="submit" class="btn save-btn text-light">save</button>
                 </form>
-                <small class="text-secondary ms-3">Select a vault to save this keep</small>
+                <small v-if="route.name == 'Home'" class="text-secondary ms-3">Select a vault to save this keep</small>
               </div>
               <div class="d-flex align-items-center justify-content-end me-3 col-4">
                 <img :src="keep.creator.picture" :alt="'a photo of ' + keep.creator.name" class="profile-pic">
@@ -43,18 +47,23 @@
 
 
 <script>
-import { computed, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { AppState } from "../AppState.js";
 import { logger } from "../utils/Logger.js";
 import Pop from "../utils/Pop.js";
 import { vaultKeepsService } from "../services/VaultKeepsService.js";
 import { keepsService } from "../services/KeepsService.js";
+import { useRoute } from "vue-router";
 
 export default {
   setup() {
     const editable = ref({})
+    const route = useRoute()
+
+    onMounted(() => logger.log(route.name))
     return {
       editable,
+      route,
       keep: computed(() => AppState.activeKeep),
       vaults: computed(() => AppState.myVaults),
       account: computed(() => AppState.account),
@@ -80,6 +89,20 @@ export default {
           logger.error(error)
           Pop.error(error.message)
         }
+      },
+
+      async removeKeepFromVault(keepId, keepName) {
+        try {
+          if (await Pop.confirm("Are you sure you want to remove this keep from your vault?", "You can always add it again later if you change your mind.", "Yes, I'm sure", "warning")) {
+            const vaultKeep = AppState.keepsInVault.find(vk => vk.id == keepId)
+            const vaultKeepId = vaultKeep.vaultKeepId
+            await vaultKeepsService.removeKeepFromVault(vaultKeepId, keepId)
+            Pop.toast(`"${keepName}" has been removed`, "success", "top")
+          }
+        } catch (error) {
+          logger.error(error)
+          Pop.error(error.message)
+        }
       }
     }
   }
@@ -97,6 +120,13 @@ export default {
   position: absolute;
   top: 0px;
   right: 0px;
+  width: 5vh !important;
+}
+
+.remove-btn {
+  position: absolute;
+  top: 0px;
+  right: 30px;
   width: 5vh !important;
 }
 
