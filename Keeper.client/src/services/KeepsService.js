@@ -3,6 +3,7 @@ import { AppState } from "../AppState.js";
 import { Keep } from "../models/Keep.js";
 import { logger } from "../utils/Logger.js";
 import { api } from "./AxiosService.js";
+import Pop from "../utils/Pop.js";
 
 class KeepsService {
   async GetAllKeeps() {
@@ -20,6 +21,14 @@ class KeepsService {
     AppState.keeps.push(new Keep(res.data))
     window.scrollTo({ left: 0, top: document.body.scrollHeight, behavior: "smooth" })
     Modal.getOrCreateInstance("#createKeepModal").hide()
+  }
+
+  async deleteKeep(keepId) {
+    const res = await api.delete(`api/keeps/${keepId}`)
+    logger.log(res.data)
+    Modal.getOrCreateInstance("#activeKeepModal").hide()
+    const foundIndex = AppState.keeps.find(k => k.id == keepId)
+    AppState.keeps.splice(foundIndex, 1)
   }
 }
 

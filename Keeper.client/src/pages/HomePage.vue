@@ -71,6 +71,7 @@ export default {
   column-gap: 2rem;
   padding-left: 3em;
   padding-right: 3em;
+  padding-top: 1em;
 
   .keeps-card {
     width: 150px;

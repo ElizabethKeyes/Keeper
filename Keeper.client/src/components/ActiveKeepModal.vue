@@ -3,6 +3,8 @@
     <div class="modal-dialog modal-lg">
       <div v-if="keep" class="modal-content">
         <div class="modal-body row">
+          <button @click="deleteKeep(keep.id, keep.name)" v-if="account.id == keep.creator.id" class="btn delete-btn"
+            title="Delete Keep"><i class="mdi mdi-close-circle text-danger"></i></button>
           <div class="col-md-6 p-0">
             <img :src="keep.img" :alt="'a photo of ' + keep.name" class="keep-photo">
           </div>
@@ -46,6 +48,7 @@ import { AppState } from "../AppState.js";
 import { logger } from "../utils/Logger.js";
 import Pop from "../utils/Pop.js";
 import { vaultKeepsService } from "../services/VaultKeepsService.js";
+import { keepsService } from "../services/KeepsService.js";
 
 export default {
   setup() {
@@ -65,6 +68,18 @@ export default {
           logger.log(error)
           Pop.error(error.message)
         }
+      },
+
+      async deleteKeep(keepId, keepName) {
+        try {
+          if (await Pop.confirm("Are you sure you want to delete this keep?", "This cannot be undone", "Yes, I'm sure", "warning")) {
+            await keepsService.deleteKeep(keepId)
+            Pop.toast(`"${keepName}" has been deleted`, "success", "top")
+          }
+        } catch (error) {
+          logger.error(error)
+          Pop.error(error.message)
+        }
       }
     }
   }
@@ -75,6 +90,14 @@ export default {
 <style lang="scss" scoped>
 .modal-body {
   padding: 0px;
+  position: relative;
+}
+
+.delete-btn {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 5vh !important;
 }
 
 .keep-photo {
