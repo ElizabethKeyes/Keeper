@@ -1,9 +1,25 @@
 <template>
-  <nav class="nav-bg px-3 d-flex justify-content-between align-items-center">
-    <router-link :to="{ name: 'Home' }">
-      <button class="btn btn-home rounded-pill fw-bold my-font">Home</button>
-    </router-link>
-    <img src="../assets/img/logo.png" alt="the keeper logo" class="keeper-logo">
+  <nav class="nav-bg px-3 d-flex row align-items-center">
+    <div class="d-flex col-4">
+      <router-link :to="{ name: 'Home' }">
+        <button class="btn btn-home rounded-pill my-font">Home</button>
+      </router-link>
+
+      <div class="dropdown ms-2 my-font">
+        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+          aria-expanded="false">
+          Create
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          <li><a class="dropdown-item" href="#">new keep</a></li>
+          <hr>
+          <li><a class="dropdown-item" href="#">new vault</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-4 d-flex justify-content-center">
+      <img src="../assets/img/logo.png" alt="the keeper logo" class="keeper-logo">
+    </div>
     <!-- <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav me-auto"> -->
     <!-- <li>
@@ -13,7 +29,9 @@
         </li> -->
     <!-- </ul> -->
     <!-- LOGIN COMPONENT HERE -->
-    <Login />
+    <div class="col-4 d-flex justify-content-end">
+      <Login />
+    </div>
     <!-- </div> -->
   </nav>
 
@@ -64,6 +82,7 @@ a:hover {
 
 .my-font {
   font-family: 'Oxygen', sans-serif;
+  font-weight: bold;
 }
 
 .btn-home {
@@ -76,6 +95,10 @@ a:hover {
 
 .keeper-logo {
   height: 85%;
+}
+
+.dropdown-menu {
+  background-color: rgba(222, 214, 233, 1)
 }
 
 /* .navbar-nav .router-link-exact-active {
