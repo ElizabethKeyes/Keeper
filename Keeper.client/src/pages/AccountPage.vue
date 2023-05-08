@@ -129,6 +129,7 @@ export default {
   border-radius: 100%;
   height: 15vh;
   width: 15vh;
+  border: solid white 2px;
 }
 
 .buffer {

@@ -4,7 +4,7 @@
       <div v-if="keep" class="modal-content">
         <div class="modal-body row">
           <button @click="deleteKeep(keep.id, keep.name)" v-if="account.id == keep.creator.id" class="btn delete-btn"
-            title="Delete Keep"><i class="mdi mdi-close-circle text-danger"></i></button>
+            title="Delete Keep"><i class="mdi mdi-delete text-danger"></i></button>
           <div class="col-md-6 p-0">
             <img :src="keep.img" :alt="'a photo of ' + keep.name" class="keep-photo">
           </div>
