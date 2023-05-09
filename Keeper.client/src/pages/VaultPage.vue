@@ -33,7 +33,7 @@ import { useRoute, useRouter } from "vue-router";
 import { AppState } from "../AppState.js";
 import { logger } from "../utils/Logger.js";
 import Pop from "../utils/Pop.js";
-import { computed, onMounted } from "vue";
+import { computed, onMounted, watchEffect } from "vue";
 import { vaultsService } from "../services/VaultsService.js";
 import { vaultKeepsService } from "../services/VaultKeepsService.js";
 import KeepsCard from "../components/KeepsCard.vue"
@@ -51,8 +51,8 @@ export default {
         await vaultsService.setActiveVault(vaultId)
       } catch (error) {
         let errorMessage = error.response.data
-        logger.log('errorMessage', errorMessage)
         if (errorMessage == "This vault is private!") {
+          logger.log('SHOULD POP CUSTOM ERROR')
           logger.error(error)
           Pop.toast("That vault is private", "error")
           router.push({ name: "Home" })
@@ -75,7 +75,12 @@ export default {
 
     onMounted(() => {
       setActiveVault()
-      getKeepsInVault()
+    })
+
+    watchEffect(() => {
+      if (AppState.activeVault) {
+        getKeepsInVault()
+      }
     })
     return {
       vault: computed(() => AppState.activeVault),
