@@ -40,7 +40,7 @@
 import { logger } from "../utils/Logger.js";
 import Pop from "../utils/Pop.js";
 import { profilesService } from "../services/ProfilesService.js"
-import { computed, onMounted } from "vue";
+import { computed, onMounted, watchEffect } from "vue";
 import { useRoute } from "vue-router";
 import { vaultsService } from "../services/VaultsService.js";
 import { AppState } from "../AppState.js";
@@ -78,6 +78,15 @@ export default {
         Pop.error(error.message)
       }
     }
+    async function getMyVaults() {
+      try {
+        const userId = AppState.account.id
+        await vaultsService.GetMyVaults(userId)
+      } catch (error) {
+        logger.log(error)
+        Pop.error(error.message)
+      }
+    }
 
 
     onMounted(() => {
@@ -85,10 +94,26 @@ export default {
       getVaultsByProfileId();
       getKeepsByProfileId();
     });
+
+    watchEffect(() => {
+      if (AppState.account.id) {
+        getMyVaults();
+      }
+    })
+
     return {
       profile: computed(() => AppState.activeProfile),
       vaults: computed(() => AppState.profileVaults),
-      keeps: computed(() => AppState.profileKeeps)
+      keeps: computed(() => AppState.profileKeeps),
+
+      async setActiveKeep(keepId) {
+        try {
+          await keepsService.setActiveKeep(keepId)
+        } catch (error) {
+          logger.log(error)
+          Pop.error(error.message)
+        }
+      },
     };
   },
   components: { VaultCard }

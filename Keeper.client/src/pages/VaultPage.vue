@@ -2,6 +2,8 @@
   <div class="container-fluid">
     <section v-if="vault" class="row justify-content-center">
       <div class="col-md-5 mt-md-4 px-0">
+        <button v-if="vault.creatorId == account.id" class="btn btn-outline-danger delete-btn"
+          @click="deleteVault()">Delete Vault</button>
         <div class="vault-banner" :style="{ backgroundImage: `url(${vault.img})` }">
           <h1>{{ vault.name }}</h1>
           <h4>by {{ vault.creator.name }}</h4>
@@ -78,10 +80,31 @@ export default {
     return {
       vault: computed(() => AppState.activeVault),
       vaultKeeps: computed(() => AppState.keepsInVault),
+      account: computed(() => AppState.account),
+      route,
 
       async setActiveKeep(keepId) {
-        await keepsService.setActiveKeep(keepId)
+        try {
+          await keepsService.setActiveKeep(keepId)
+        } catch (error) {
+          logger.log(error)
+          Pop.error(error.message)
+        }
       },
+
+      async deleteVault() {
+        try {
+          if (await Pop.confirm("Are you sure you'd like to delete this vault?", "This action cannot be undone", "Yes, I'm sure", "warning")) {
+            const vaultId = route.params.vaultId
+            await vaultsService.deleteVault(vaultId)
+            router.push({ name: "Account" })
+
+          }
+        } catch (error) {
+          logger.log(error)
+          Pop.error(error.message)
+        }
+      }
     }
   },
   components: { KeepsCard, ActiveKeepModal }
@@ -142,6 +165,12 @@ export default {
 .keeps-card:hover {
   cursor: pointer;
   transform: scale(1.025);
+}
+
+.delete-btn {
+  position: absolute;
+  top: 91px;
+  right: 15px;
 }
 
 

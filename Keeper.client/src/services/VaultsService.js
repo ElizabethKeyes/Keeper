@@ -1,6 +1,5 @@
 import { AppState } from "../AppState.js";
 import { Vault } from "../models/Vault.js";
-import { VaultKeep } from "../models/VaultKeep.js";
 import { logger } from "../utils/Logger.js";
 import { api } from "./AxiosService.js";
 
@@ -24,6 +23,10 @@ class VaultsService {
   async getVaultsByProfileId(profileId) {
     const res = await api.get(`api/profiles/${profileId}/vaults`)
     AppState.profileVaults = res.data.map(v => new Vault(v))
+  }
+
+  async deleteVault(vaultId) {
+    const res = await api.delete(`api/vaults/${vaultId}`)
   }
 }
 

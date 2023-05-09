@@ -23,7 +23,7 @@
             </div>
             <section class="mb-4 row justify-content-between">
               <div class="col-7">
-                <form v-if="account.id && route.name == 'Home'" name="addToVault" class="d-flex ms-3"
+                <form v-if="account.id && route.name == 'Home' || 'ProfilePage'" name="addToVault" class="d-flex ms-3"
                   @submit.prevent="addToVault()">
                   <select name="vault" id="vault" class="form-control my-input me-2" required v-model="editable.vault">
                     <!-- <option hidden selected disabled>-select a vault-</option> -->
@@ -31,7 +31,8 @@
                   </select>
                   <button type="submit" class="btn save-btn text-light">save</button>
                 </form>
-                <small v-if="route.name == 'Home'" class="text-secondary ms-3">Select a vault to save this keep</small>
+                <small v-if="route.name == 'Home' || 'ProfilePage'" class="text-secondary ms-3">Select a vault to save
+                  this keep</small>
               </div>
               <div class="d-flex align-items-center justify-content-end me-3 col-4" data-bs-dismiss="modal">
                 <router-link :to="{ name: 'ProfilePage', params: { profileId: keep.creator.id } }">
