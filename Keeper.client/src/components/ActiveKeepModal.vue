@@ -22,16 +22,17 @@
               <p class="description-text">{{ keep.description }}</p>
             </div>
             <section class="mb-4 row justify-content-between">
-              <div class="col-7">
-                <form v-if="account.id && route.name == 'Home' || 'ProfilePage'" name="addToVault" class="d-flex ms-3"
-                  @submit.prevent="addToVault()">
+              <div v-if="dictionary && keep" class="col-7">
+                <form v-if="account.id && route.name == 'Home' || route.name == 'ProfilePage'" name="addToVault"
+                  class="d-flex ms-3" @submit.prevent="addToVault()">
                   <select name="vault" id="vault" class="form-control my-input me-2" required v-model="editable.vault">
                     <!-- <option hidden selected disabled>-select a vault-</option> -->
-                    <option v-for="v in vaults" :value="v.id">{{ v.name }}</option>
+                    <option v-for="v in availableVaults" :value="v.id">{{ v.name }}</option>
                   </select>
                   <button type="submit" class="btn save-btn text-light">save</button>
                 </form>
-                <small v-if="route.name == 'Home' || 'ProfilePage'" class="gray-text ms-3">Select a vault to save
+                <small v-if="route.name == 'Home' || route.name == 'ProfilePage'" class="gray-text ms-3">Select a vault to
+                  save
                   this keep</small>
               </div>
               <div class="d-flex align-items-center justify-content-end me-3 col-4" data-bs-dismiss="modal">
@@ -69,8 +70,23 @@ export default {
       editable,
       route,
       keep: computed(() => AppState.activeKeep),
+      dictionary: computed(() => AppState.vaultKeepDictionary),
       vaults: computed(() => AppState.myVaults),
       account: computed(() => AppState.account),
+      availableVaults: computed(() => {
+        if (AppState.vaultKeepDictionary[AppState.activeKeep.id]) {
+          let vaultIds = AppState.vaultKeepDictionary[AppState.activeKeep.id]
+          let availableVaults = AppState.myVaults.filter(v => v == v)
+          for (let i = 0; i < vaultIds.length; i++) {
+            let foundIndex = availableVaults.findIndex(v => v.id == vaultIds[i])
+            if (foundIndex > -1) {
+              availableVaults.splice(foundIndex, 1)
+            }
+          }
+          return availableVaults
+
+        } else return AppState.myVaults
+      }),
 
       async addToVault() {
         try {

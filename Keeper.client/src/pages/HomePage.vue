@@ -21,6 +21,7 @@ import { computed, onMounted, watchEffect } from "vue";
 import { AppState } from "../AppState.js";
 import KeepsCard from "../components/KeepsCard.vue"
 import ActiveKeepModal from "../components/ActiveKeepModal.vue";
+import { vaultKeepsService } from "../services/VaultKeepsService.js";
 
 export default {
 
@@ -44,13 +45,23 @@ export default {
       }
     }
 
+    async function getMyVaultKeeps() {
+      try {
+        await vaultKeepsService.getMyVaultKeeps()
+      } catch (error) {
+        logger.error(error)
+        Pop.error(error.message)
+      }
+    }
+
     onMounted(() => {
       GetAllKeeps()
     })
 
     watchEffect(() => {
-      if (AppState.account) {
+      if (AppState.account.id) {
         GetMyVaults()
+        getMyVaultKeeps()
       }
     })
 

@@ -52,7 +52,6 @@ export default {
       } catch (error) {
         let errorMessage = error.response.data
         if (errorMessage == "This vault is private!") {
-          logger.log('SHOULD POP CUSTOM ERROR')
           logger.error(error)
           Pop.toast("That vault is private", "error")
           router.push({ name: "Home" })

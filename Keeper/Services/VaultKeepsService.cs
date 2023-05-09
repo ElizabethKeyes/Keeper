@@ -38,6 +38,12 @@ public class VaultKeepsService
     }
   }
 
+  internal List<VaultKeep> GetMyVaultKeeps(string userId)
+  {
+    List<VaultKeep> vaultKeeps = _repo.GetMyVaultKeeps(userId);
+    return vaultKeeps;
+  }
+
   internal VaultKeep GetVaultKeepById(int vaultKeepId)
   {
     VaultKeep vaultKeep = _repo.GetVaultKeepById(vaultKeepId);

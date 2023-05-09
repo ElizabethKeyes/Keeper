@@ -33,6 +33,19 @@ public class VaultKeepsRepository
     _db.Execute(sql, new { vaultKeepId });
   }
 
+  internal List<VaultKeep> GetMyVaultKeeps(string userId)
+  {
+    string sql = @"
+    SELECT
+    *
+    FROM vaultKeeps
+    WHERE vaultKeeps.creatorId = @userId;
+    ";
+
+    List<VaultKeep> vaultKeeps = _db.Query<VaultKeep>(sql, new { userId }).ToList();
+    return vaultKeeps;
+  }
+
   internal VaultKeep GetVaultKeepById(int vaultKeepId)
   {
     string sql = @"

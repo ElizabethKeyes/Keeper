@@ -13,6 +13,12 @@ class VaultKeepsService {
     const res = await api.post(`api/vaultkeeps`, vaultKeepData)
     AppState.vaultKeep = new VaultKeep(res.data)
     AppState.activeKeep.kept++
+    if (AppState.vaultKeepDictionary[keepId]) {
+      AppState.vaultKeepDictionary[keepId].push(vaultId)
+    } else if (!AppState.vaultKeepDictionary[keepId]) {
+      AppState.vaultKeepDictionary[keepId] = []
+      AppState.vaultKeepDictionary[keepId].push(vaultId)
+    }
   }
 
   async getKeepsInVault(vaultId) {
@@ -27,6 +33,21 @@ class VaultKeepsService {
     const foundIndex2 = AppState.keepsInVault.findIndex(k => k.vaultKeepId == vaultKeepId)
     AppState.keepsInVault.splice(foundIndex2, 1)
     Modal.getOrCreateInstance("#activeKeepModal").hide()
+  }
+
+  async getMyVaultKeeps() {
+    const res = await api.get(`account/vaultkeeps`)
+    AppState.myVaultKeeps = res.data.map(vk => new VaultKeep(vk))
+
+    // sorting vaultKeeps into dictionary so I can refer to the IDs when populating dropdown menu
+    AppState.myVaultKeeps.forEach(k => {
+      if (AppState.vaultKeepDictionary[k.keepId]) {
+        AppState.vaultKeepDictionary[k.keepId].push(k.vaultId)
+      } else if (!AppState.vaultKeepDictionary[k.keepId]) {
+        AppState.vaultKeepDictionary[k.keepId] = []
+        AppState.vaultKeepDictionary[k.keepId].push(k.vaultId)
+      }
+    })
   }
 }
 
