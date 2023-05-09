@@ -30,6 +30,11 @@ class KeepsService {
     const foundIndex = AppState.keeps.findIndex(k => k.id == keepId)
     AppState.keeps.splice(foundIndex, 1)
   }
+
+  async getKeepsByProfileId(profileId) {
+    const res = await api.get(`api/profiles/${profileId}/keeps`)
+    AppState.profileKeeps = res.data.map(k => new Keep(k))
+  }
 }
 
 export const keepsService = new KeepsService();

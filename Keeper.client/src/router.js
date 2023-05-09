@@ -26,7 +26,12 @@ const routes = [
     path: '/vault/:vaultId',
     name: 'VaultDetailsPage',
     component: loadPage('VaultPage')
-  }
+  },
+  {
+    path: '/profile/:profileId',
+    name: 'ProfilePage',
+    component: loadPage('ProfilePage')
+  },
 ]
 
 export const router = createRouter({

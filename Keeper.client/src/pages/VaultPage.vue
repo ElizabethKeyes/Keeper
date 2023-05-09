@@ -27,7 +27,7 @@
 
 
 <script>
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { AppState } from "../AppState.js";
 import { logger } from "../utils/Logger.js";
 import Pop from "../utils/Pop.js";
@@ -41,14 +41,23 @@ import ActiveKeepModal from "../components/ActiveKeepModal.vue";
 export default {
   setup() {
     const route = useRoute()
+    const router = useRouter()
 
     async function setActiveVault() {
       try {
         const vaultId = route.params.vaultId
         await vaultsService.setActiveVault(vaultId)
       } catch (error) {
-        logger.log(error)
-        Pop.error(error.message)
+        let errorMessage = error.response.data
+        logger.log('errorMessage', errorMessage)
+        if (errorMessage == "This vault is private!") {
+          logger.error(error)
+          Pop.toast("That vault is private", "error")
+          router.push({ name: "Home" })
+        } else {
+          logger.log(error)
+          Pop.error(error.message)
+        }
       }
     }
 

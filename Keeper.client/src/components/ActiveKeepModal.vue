@@ -33,9 +33,13 @@
                 </form>
                 <small v-if="route.name == 'Home'" class="text-secondary ms-3">Select a vault to save this keep</small>
               </div>
-              <div class="d-flex align-items-center justify-content-end me-3 col-4">
-                <img :src="keep.creator.picture" :alt="'a photo of ' + keep.creator.name" class="profile-pic">
-                <h6 class="creator-name">{{ keep.creator.name }}</h6>
+              <div class="d-flex align-items-center justify-content-end me-3 col-4" data-bs-dismiss="modal">
+                <router-link :to="{ name: 'ProfilePage', params: { profileId: keep.creator.id } }">
+                  <div class="d-flex align-items-center text-dark">
+                    <img :src="keep.creator.picture" :alt="'a photo of ' + keep.creator.name" class="profile-pic">
+                    <h6 class="creator-name">{{ keep.creator.name }}</h6>
+                  </div>
+                </router-link>
               </div>
             </section>
           </div>
@@ -60,7 +64,6 @@ export default {
     const editable = ref({})
     const route = useRoute()
 
-    onMounted(() => logger.log(route.name))
     return {
       editable,
       route,
