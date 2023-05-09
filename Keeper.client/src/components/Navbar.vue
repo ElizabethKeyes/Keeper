@@ -29,7 +29,9 @@
   <div class="container-fluid mobile-nav">
     <section class="row">
       <div class="col-4 d-flex align-items-center">
-        <img src="../assets/img/logo.png" alt="the keeper logo" class="keeper-logo">
+        <router-link :to="{ name: 'Home' }">
+          <img src="../assets/img/logo.png" alt="the keeper logo" class="keeper-logo">
+        </router-link>
       </div>
       <div class="col-4 d-flex justify-content-center align-items-center">
         <button v-if="account?.id" class="btn btn-create my-font" type="button" id="dropdownMenuButton1"
@@ -156,8 +158,12 @@ a:hover {
   }
 
   .btn-create {
-    background-color: rgba(135, 122, 143, 1);
+    background-color: #74647d;
     color: rgba(254, 246, 240, 1)
+  }
+
+  .keeper-logo {
+    height: 75%;
   }
 }
 </style>

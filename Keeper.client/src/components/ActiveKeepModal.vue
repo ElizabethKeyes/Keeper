@@ -12,7 +12,7 @@
             <img :src="keep.img" :alt="'a photo of ' + keep.name" class="keep-photo">
           </div>
           <div class="col-md-6 p-0 text-col">
-            <div class="text-secondary mt-4 d-flex align-items-center justify-content-center icon-row">
+            <div class="mt-4 d-flex align-items-center justify-content-center icon-row">
               <h6 class="me-3 mb-0"><i class="mdi mdi-eye-outline me-1"></i>{{ keep.views }}</h6>
               <img src="../assets/img/keeps.png" alt="keeper logo" class="kept-icon me-1">
               <h6 class="mb-0">{{ keep.kept }}</h6>
@@ -31,7 +31,7 @@
                   </select>
                   <button type="submit" class="btn save-btn text-light">save</button>
                 </form>
-                <small v-if="route.name == 'Home' || 'ProfilePage'" class="text-secondary ms-3">Select a vault to save
+                <small v-if="route.name == 'Home' || 'ProfilePage'" class="gray-text ms-3">Select a vault to save
                   this keep</small>
               </div>
               <div class="d-flex align-items-center justify-content-end me-3 col-4" data-bs-dismiss="modal">
@@ -170,11 +170,11 @@ export default {
 }
 
 .save-btn {
-  background-color: rgba(135, 122, 143, 1);
+  background-color: #74647d;
 }
 
 .save-btn:hover {
-  border: rgba(135, 122, 143, 1) solid 1px;
+  border: #74647d solid 1px;
   color: black !important
 }
 
@@ -197,6 +197,14 @@ export default {
   border-bottom: gray 2px solid !important;
   background-color: rgba(254, 246, 240, 1);
   border-radius: 0px
+}
+
+.icon-row {
+  color: #59727e
+}
+
+.gray-text {
+  color: #59727e
 }
 
 @media screen and (max-width: 768px) {

@@ -1,18 +1,20 @@
 <template>
   <form @submit.prevent="createVault()">
     <div class="form-floating mb-3">
-      <input type="text" class="form-control" id="name" v-model="editable.name">
+      <input type="text" class="form-control" id="name" minlength="3" maxlength="20" required v-model="editable.name">
       <label for="name">Name</label>
     </div>
     <div class="form-floating mb-3">
-      <input type="url" class="form-control" id="img" v-model="editable.img" @input="updateImagePreview()">
+      <input type="url" class="form-control" id="img" minlength="15" maxlength="400" required v-model="editable.img"
+        @input="updateImagePreview()">
       <label for="img">Image Url</label>
     </div>
 
     <img :src="imagePreview" v-if="imagePreview" class="image-preview" alt="a preview of your vault's image">
 
     <div class="form-floating mb-3">
-      <textarea name="description" id="description" class="form-control" v-model="editable.description"></textarea>
+      <textarea name="description" id="description" class="form-control" minlength="5" maxlength="250" required
+        v-model="editable.description"></textarea>
       <label for="description">Description</label>
     </div>
     <div class="d-flex flex-column align-items-end my-4">

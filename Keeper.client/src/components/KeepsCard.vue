@@ -57,4 +57,16 @@ export default {
   color: rgba(255, 255, 255);
 
 }
+
+@media screen and (max-width: 768px) {
+  .title-container {
+    padding-bottom: .4em;
+    font-size: xx-small;
+  }
+
+  .title-container img {
+    display: none;
+  }
+
+}
 </style>

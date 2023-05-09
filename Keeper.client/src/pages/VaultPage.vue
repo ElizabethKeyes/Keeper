@@ -190,5 +190,10 @@ export default {
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
   }
+
+  .delete-btn {
+    top: 290px;
+    right: 15px;
+  }
 }
 </style>
