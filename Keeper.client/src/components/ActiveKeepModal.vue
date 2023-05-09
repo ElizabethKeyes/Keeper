@@ -118,6 +118,9 @@ export default {
           if (await Pop.confirm("Are you sure you want to remove this keep from your vault?", "You can always add it again later if you change your mind.", "Yes, I'm sure", "warning")) {
             const vaultKeep = AppState.keepsInVault.find(vk => vk.id == keepId)
             const vaultKeepId = vaultKeep.vaultKeepId
+            const vaultId = route.params.vaultId
+            let revisedVaultIds = AppState.vaultKeepDictionary[keepId].filter(i => i != vaultId)
+            AppState.vaultKeepDictionary[keepId] = revisedVaultIds
             await vaultKeepsService.removeKeepFromVault(vaultKeepId, keepId)
             Pop.toast(`"${keepName}" has been removed`, "success", "top")
           }
