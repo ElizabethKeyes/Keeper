@@ -27,7 +27,9 @@
                   class="d-flex ms-3" @submit.prevent="addToVault()">
                   <select name="vault" id="vault" class="form-control my-input me-2" required v-model="editable.vault">
                     <!-- <option hidden selected disabled>-select a vault-</option> -->
-                    <option v-for="v in availableVaults" :value="v.id">{{ v.name }}</option>
+                    <option v-for="v in availableVaults" :value="v.id" v-if="availableVaults.length > 0">{{ v.name }}
+                    </option>
+                    <option disabled selected v-else>No available vaults</option>
                   </select>
                   <button type="submit" class="btn save-btn text-light">save</button>
                 </form>
