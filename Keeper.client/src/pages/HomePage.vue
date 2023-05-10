@@ -11,7 +11,7 @@
   </div>
   <ActiveKeepModal />
 </template>
-<!-- TODO reactivity and remove from vault on someone else's vault, also increase modal size -->
+
 <script>
 import { logger } from "../utils/Logger.js";
 import Pop from "../utils/Pop.js";

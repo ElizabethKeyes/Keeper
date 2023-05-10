@@ -67,8 +67,15 @@ export default {
         const vaultId = route.params.vaultId
         await vaultKeepsService.getKeepsInVault(vaultId)
       } catch (error) {
-        logger.log(error)
-        Pop.error(error.message)
+        let errorMessage = error.response.data
+        if (errorMessage == "This vault is private!") {
+          logger.error(error)
+          Pop.toast("That vault is private", "error")
+          router.push({ name: "Home" })
+        } else {
+          logger.log(error)
+          Pop.error(error.message)
+        }
       }
     }
 
@@ -106,6 +113,10 @@ export default {
       if (AppState.activeVault) {
         getKeepsInVault()
       }
+    })
+
+    watchEffect(() => {
+      route.params.vaultId
     })
     return {
       vault: computed(() => AppState.activeVault),
@@ -203,6 +214,10 @@ export default {
   right: 15px;
   color: #b81020 !important;
   border: 1px solid #b81020 !important
+}
+
+.delete-btn:hover {
+  color: white !important
 }
 
 
