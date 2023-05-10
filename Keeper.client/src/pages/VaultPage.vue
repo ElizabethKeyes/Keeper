@@ -100,12 +100,12 @@ export default {
 
     onMounted(() => {
       setActiveVault()
-      getMyVaultKeeps()
     })
 
     watchEffect(() => {
       if (AppState.account.id) {
         GetMyVaults()
+        getMyVaultKeeps()
       }
     })
 
