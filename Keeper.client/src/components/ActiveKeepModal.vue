@@ -1,12 +1,12 @@
 <template>
   <div class="modal fade" id="activeKeepModal" tabindex="-1" aria-labelledby="activeKeepModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-xl">
       <div v-if="keep" class="modal-content">
         <div class="modal-body row">
           <button @click="deleteKeep(keep.id, keep.name)" v-if="account.id == keep.creator.id" class="btn delete-btn"
             title="Delete Keep"><i class="mdi mdi-delete text-danger"></i></button>
           <button class="btn remove-btn" title="Remove From Vault" @click="removeKeepFromVault(keep.id, keep.name)"
-            v-if="account.id && route.name == 'VaultDetailsPage'"><i
+            v-if="account.id == vault?.creatorId && route.name == 'VaultDetailsPage'"><i
               class="mdi mdi-bookmark-remove text-danger"></i></button>
           <div class="col-md-6 p-0">
             <img :src="keep.img" :alt="'a photo of ' + keep.name" class="keep-photo">
@@ -22,9 +22,8 @@
               <p class="description-text">{{ keep.description }}</p>
             </div>
             <section class="mb-4 row justify-content-between">
-              <div v-if="dictionary && keep" class="col-7">
-                <form v-if="account.id && route.name == 'Home' || route.name == 'ProfilePage'" name="addToVault"
-                  class="d-flex ms-3" @submit.prevent="addToVault()">
+              <div v-if="dictionary && keep" class="col-md-6 col-7">
+                <form v-if="account.id" name="addToVault" class="d-flex ms-3" @submit.prevent="addToVault()">
                   <select name="vault" id="vault" class="form-control my-input me-2" required v-model="editable.vault">
                     <!-- <option hidden selected disabled>-select a vault-</option> -->
                     <option v-for="v in availableVaults" :value="v.id" v-if="availableVaults.length > 0">{{ v.name }}
@@ -33,18 +32,31 @@
                   </select>
                   <button type="submit" class="btn save-btn text-light">save</button>
                 </form>
-                <small v-if="route.name == 'Home' || route.name == 'ProfilePage'" class="gray-text ms-3">Select a vault to
+                <small v-if="account.id" class="gray-text ms-3">Select a vault to
                   save
                   this keep</small>
               </div>
-              <div class="d-flex align-items-center justify-content-end me-3 col-4" data-bs-dismiss="modal">
+
+              <div class="d-flex align-items-center justify-content-end me-3 col-md-5 col-4 large-screen-name"
+                data-bs-dismiss="modal">
                 <router-link :to="{ name: 'ProfilePage', params: { profileId: keep.creator.id } }">
-                  <div class="d-flex align-items-center text-dark">
+                  <div class="d-flex align-items-center text-dark justify-content-end">
                     <img :src="keep.creator.picture" :alt="'a photo of ' + keep.creator.name" class="profile-pic">
                     <h6 class="creator-name">{{ keep.creator.name }}</h6>
                   </div>
                 </router-link>
               </div>
+
+              <div class="d-flex align-items-center justify-content-end me-4 col-4 small-screen-name"
+                data-bs-dismiss="modal">
+                <router-link :to="{ name: 'ProfilePage', params: { profileId: keep.creator.id } }">
+                  <div class="d-flex flex-column align-items-center pe-2 text-dark">
+                    <img :src="keep.creator.picture" :alt="'a photo of ' + keep.creator.name" class="profile-pic">
+                    <h6 class="creator-name">{{ keep.creator.name }}</h6>
+                  </div>
+                </router-link>
+              </div>
+
             </section>
           </div>
         </div>
@@ -62,8 +74,12 @@ import Pop from "../utils/Pop.js";
 import { vaultKeepsService } from "../services/VaultKeepsService.js";
 import { keepsService } from "../services/KeepsService.js";
 import { useRoute } from "vue-router";
+import { Vault } from "../models/Vault.js";
 
 export default {
+  props: {
+    vault: { type: Vault, required: false }
+  },
   setup() {
     const editable = ref({})
     const route = useRoute()
@@ -85,6 +101,7 @@ export default {
               availableVaults.splice(foundIndex, 1)
             }
           }
+          logger.log('AVAILABLE VAULTS', availableVaults)
           return availableVaults
 
         } else return AppState.myVaults
@@ -228,6 +245,14 @@ export default {
   color: #59727e
 }
 
+.small-screen-name {
+  display: none !important;
+}
+
+.large-screen-name {
+  display: block !important;
+}
+
 @media screen and (max-width: 768px) {
   .keep-photo {
     border-top-left-radius: 0px;
@@ -243,6 +268,19 @@ export default {
 
   .icon-row {
     margin-bottom: .75em;
+  }
+
+  .small-screen-name {
+    display: block !important;
+  }
+
+  .large-screen-name {
+    display: none !important;
+  }
+
+  .creator-name {
+    text-align: center;
+    margin-left: 0;
   }
 }
 </style>

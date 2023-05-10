@@ -2,12 +2,14 @@
   <img :src="keep.img" :alt="'a photo of ' + keep.name" class="keeps-photos">
   <div class="title-container">
     <h5 class="keeps-title">{{ keep.name }}</h5>
-    <img :src="keep.creator.picture" :alt="'a photo of ' + keep.creator.name" :title="keep.creator.name">
+    <img v-if="route.name == 'Home' || route.name == 'VaultDetailsPage'" :src="keep.creator.picture"
+      :alt="'a photo of ' + keep.creator.name" :title="keep.creator.name">
   </div>
 </template>
 
 
 <script>
+import { useRoute } from "vue-router";
 import { Keep } from "../models/Keep.js";
 
 export default {
@@ -15,7 +17,10 @@ export default {
     keep: { type: Keep, required: true }
   },
   setup() {
-    return {}
+    const route = useRoute()
+    return {
+      route,
+    }
   }
 }
 </script>

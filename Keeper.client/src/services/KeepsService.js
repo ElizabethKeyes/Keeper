@@ -28,6 +28,10 @@ class KeepsService {
     Modal.getOrCreateInstance("#activeKeepModal").hide()
     const foundIndex = AppState.keeps.findIndex(k => k.id == keepId)
     AppState.keeps.splice(foundIndex, 1)
+    if (AppState.keepsInVault.length > 0) {
+      const foundIndex2 = AppState.keepsInVault.findIndex(k => k.id == keepId)
+      AppState.keepsInVault.splice(foundIndex2, 1)
+    }
   }
 
   async getKeepsByProfileId(profileId) {

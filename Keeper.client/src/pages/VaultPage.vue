@@ -24,7 +24,7 @@
       </div>
     </section>
   </div>
-  <ActiveKeepModal />
+  <ActiveKeepModal :vault="vault" />
 </template>
 
 
@@ -72,8 +72,34 @@ export default {
       }
     }
 
+    async function getMyVaultKeeps() {
+      try {
+        await vaultKeepsService.getMyVaultKeeps()
+      } catch (error) {
+        logger.error(error)
+        Pop.error(error.message)
+      }
+    }
+
+    async function GetMyVaults() {
+      try {
+        const userId = AppState.account.id
+        await vaultsService.GetMyVaults(userId)
+      } catch (error) {
+        logger.error(error)
+        Pop.error(error.message)
+      }
+    }
+
     onMounted(() => {
       setActiveVault()
+      getMyVaultKeeps()
+    })
+
+    watchEffect(() => {
+      if (AppState.account.id) {
+        GetMyVaults()
+      }
     })
 
     watchEffect(() => {
@@ -175,6 +201,8 @@ export default {
   position: absolute;
   top: 91px;
   right: 15px;
+  color: #b81020 !important;
+  border: 1px solid #b81020 !important
 }
 
 
