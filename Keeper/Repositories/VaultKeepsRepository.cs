@@ -68,7 +68,7 @@ public class VaultKeepsRepository
     vaultKeeps.id
     FROM vaultKeeps
     JOIN keeps ON vaultKeeps.keepId = keeps.id
-    JOIN accounts ON vaultKeeps.creatorId = accounts.id
+    JOIN accounts ON keeps.creatorId = accounts.id
     WHERE vaultKeeps.vaultId = @vaultId;
     ";
 
