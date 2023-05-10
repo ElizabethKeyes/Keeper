@@ -3,7 +3,7 @@
     <div class="modal-dialog" :class="size">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="modalTitleId">
+          <h5 class="modal-title" :id="titleId">
             <slot name="header">
               You forgot the header!
             </slot>

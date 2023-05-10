@@ -1,21 +1,21 @@
 <template>
   <form @submit.prevent="createKeep()">
     <div class="form-floating mb-3">
-      <input type="text" minlength="3" maxlength="20" class="form-control" id="name" required v-model="editable.name">
-      <label for="name">Name</label>
+      <input type="text" minlength="3" maxlength="20" class="form-control" id="keepName" required v-model="editable.name">
+      <label for="keepName">Name</label>
     </div>
     <div class="form-floating mb-3">
-      <input type="url" class="form-control" minlength="15" maxlength="400" id="img" required v-model="editable.img"
+      <input type="url" class="form-control" minlength="15" maxlength="400" id="keepImg" required v-model="editable.img"
         @input="updateImagePreview()">
-      <label for="img">Image Url</label>
+      <label for="keepImg">Image Url</label>
     </div>
 
     <img :src="imagePreview" v-if="imagePreview" class="image-preview" alt="a preview of your keep's image">
 
     <div class="form-floating mb-3">
-      <textarea name="description" id="description" class="form-control" minlength="5" maxlength="250" required
+      <textarea name="keepDescription" id="keepDescription" class="form-control" minlength="5" maxlength="250" required
         v-model="editable.description"></textarea>
-      <label for="description">Description</label>
+      <label for="keepDescription">Description</label>
     </div>
     <div class="d-flex justify-content-end">
       <button class="btn btn-dark">Create</button>

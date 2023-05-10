@@ -1,21 +1,22 @@
 <template>
   <form @submit.prevent="createVault()">
     <div class="form-floating mb-3">
-      <input type="text" class="form-control" id="name" minlength="3" maxlength="20" required v-model="editable.name">
-      <label for="name">Name</label>
+      <input type="text" class="form-control" id="vaultName" minlength="3" maxlength="20" required
+        v-model="editable.name">
+      <label for="vaultName">Name</label>
     </div>
     <div class="form-floating mb-3">
-      <input type="url" class="form-control" id="img" minlength="15" maxlength="400" required v-model="editable.img"
+      <input type="url" class="form-control" id="vaultImg" minlength="15" maxlength="400" required v-model="editable.img"
         @input="updateImagePreview()">
-      <label for="img">Image Url</label>
+      <label for="vaultImg">Image Url</label>
     </div>
 
     <img :src="imagePreview" v-if="imagePreview" class="image-preview" alt="a preview of your vault's image">
 
     <div class="form-floating mb-3">
-      <textarea name="description" id="description" class="form-control" minlength="5" maxlength="250" required
+      <textarea name="vaultDescription" id="vaultDescription" class="form-control" minlength="5" maxlength="250" required
         v-model="editable.description"></textarea>
-      <label for="description">Description</label>
+      <label for="vaultDescription">Description</label>
     </div>
     <div class="d-flex flex-column align-items-end my-4">
       <small class="text-secondary">Private Vaults can only be seen by you</small>

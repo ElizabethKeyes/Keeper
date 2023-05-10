@@ -8,8 +8,8 @@
         </div>
       </div>
       <div class="col-md-10 d-flex flex-column align-items-center buffer">
-        <h2>{{ profile.name }}</h2>
-        <h5>{{ vaults.length }} Vaults | {{ keeps.length }} Keeps</h5>
+        <h1 class="fs-2">{{ profile.name }}</h1>
+        <h2 class="fs-5">{{ vaults.length }} Vaults | {{ keeps.length }} Keeps</h2>
       </div>
       <div class="col-md-10 mt-3">
         <h3 class="mb-3">Vaults</h3>
@@ -189,6 +189,7 @@ export default {
     columns: 2 100px;
     padding-left: 1em;
     padding-right: 1em;
+    margin-bottom: 3em;
   }
 }
 </style>

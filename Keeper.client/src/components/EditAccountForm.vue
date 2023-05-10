@@ -6,9 +6,9 @@
     </div>
 
     <div class="form-floating mb-3">
-      <input type="url" class="form-control" id="img" v-model="editable.picture" required minlength="10" maxlength="400"
-        @input="updateProfileImagePreview()">
-      <label for="img">Profile Photo Url</label>
+      <input type="url" class="form-control" id="profileImg" v-model="editable.picture" required minlength="10"
+        maxlength="400" @input="updateProfileImagePreview()">
+      <label for="profileImg">Profile Photo Url</label>
     </div>
     <div class="d-flex justify-content-center my-2">
       <img :src="profileImagePreview" v-if="profileImagePreview" class="profile-pic-preview"
@@ -17,9 +17,9 @@
 
 
     <div class="form-floating mb-3">
-      <input type="url" class="form-control" id="img" minlength="10" maxlength="400" required v-model="editable.coverImg"
-        @input="updateCoverImagePreview()">
-      <label for="img">Cover Photo Url</label>
+      <input type="url" class="form-control" id="coverImg" minlength="10" maxlength="400" required
+        v-model="editable.coverImg" @input="updateCoverImagePreview()">
+      <label for="coverImg">Cover Photo Url</label>
     </div>
     <img :src="coverImagePreview" v-if="coverImagePreview" class="image-preview" alt="your account's cover image">
     <div class="d-flex justify-content-end">

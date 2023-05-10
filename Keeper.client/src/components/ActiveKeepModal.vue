@@ -101,7 +101,6 @@ export default {
               availableVaults.splice(foundIndex, 1)
             }
           }
-          logger.log('AVAILABLE VAULTS', availableVaults)
           return availableVaults
 
         } else return AppState.myVaults

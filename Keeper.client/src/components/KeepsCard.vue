@@ -1,7 +1,7 @@
 <template>
   <img :src="keep.img" :alt="'a photo of ' + keep.name" class="keeps-photos">
   <div class="title-container">
-    <h5 class="keeps-title">{{ keep.name }}</h5>
+    <h4 class="keeps-title fs-5">{{ keep.name }}</h4>
     <img v-if="route.name == 'Home' || route.name == 'VaultDetailsPage'" :src="keep.creator.picture"
       :alt="'a photo of ' + keep.creator.name" :title="keep.creator.name">
   </div>

@@ -34,11 +34,11 @@
         </router-link>
       </div>
       <div class="col-4 d-flex justify-content-center align-items-center">
-        <button v-if="account?.id" class="btn btn-create my-font" type="button" id="dropdownMenuButton1"
+        <button v-if="account?.id" class="btn btn-create my-font" type="button" id="createDropdownMenu"
           data-bs-toggle="dropdown" aria-expanded="false">
           Create
         </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+        <ul class="dropdown-menu" aria-labelledby="createKeepAndVaultButtons">
           <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#createKeepModal">new keep</a></li>
           <hr>
           <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#createVaultModal">new vault</a>
@@ -51,7 +51,7 @@
     </section>
   </div>
 
-  <Modal id="createVaultModal">
+  <Modal id="createVaultModal" titleId="createVaultFormTitle">
     <template #header>
       Add your vault
     </template>
@@ -60,7 +60,7 @@
     </template>
   </Modal>
 
-  <Modal id="createKeepModal">
+  <Modal id="createKeepModal" titleId="createKeepFormTitle">
     <template #header>
       Add your keep
     </template>

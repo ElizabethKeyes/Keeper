@@ -6,10 +6,10 @@
           @click="deleteVault()">Delete Vault</button>
         <div class="vault-banner" :style="{ backgroundImage: `url(${vault.img})` }">
           <h1>{{ vault.name }}</h1>
-          <h4>by {{ vault.creator.name }}</h4>
+          <h2 class="fs-4">by {{ vault.creator.name }}</h2>
         </div>
         <div class="d-flex justify-content-center">
-          <h5 class="keeps-count">{{ vaultKeeps.length }} Keeps</h5>
+          <h3 class="keeps-count fs-5">{{ vaultKeeps.length }} Keeps</h3>
         </div>
       </div>
       <div class="col-md-10 mb-3">
@@ -226,6 +226,7 @@ export default {
     columns: 2 100px;
     padding-left: 1em;
     padding-right: 1em;
+    margin-bottom: 2em;
   }
 
   .vault-banner {

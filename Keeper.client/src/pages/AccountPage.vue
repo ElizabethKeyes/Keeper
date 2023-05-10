@@ -8,8 +8,8 @@
         </div>
       </div>
       <div class="col-md-10 d-flex flex-column align-items-center buffer">
-        <h2>{{ account.name }}</h2>
-        <h5>{{ myVaults.length }} Vaults | {{ myKeeps.length }} Keeps</h5>
+        <h1 class="fs-2">{{ account.name }}</h1>
+        <h2 class="fs-5">{{ myVaults.length }} Vaults | {{ myKeeps.length }} Keeps</h2>
         <button class="btn btn-outline-dark edit-profile-btn" data-bs-toggle="modal"
           data-bs-target="#editProfileModal">Edit Profile</button>
       </div>
@@ -171,6 +171,8 @@ export default {
     columns: 2 100px;
     padding-left: 1em;
     padding-right: 1em;
+    margin-bottom: 3em;
+
   }
 }
 </style>

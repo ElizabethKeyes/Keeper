@@ -114,6 +114,8 @@ export default {
     columns: 2 100px;
     padding-left: 1em;
     padding-right: 1em;
+    margin-bottom: 3em;
   }
+
 }
 </style>
