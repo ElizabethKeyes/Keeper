@@ -25,7 +25,7 @@
 
 
 <script setup>
-const props = defineProps({ size: { type: String, default: 'modal-md' } })
+const props = defineProps({ size: { type: String, default: 'modal-md' } }, { id: { type: String, default: 'modalForm' } })
 </script>
 
 

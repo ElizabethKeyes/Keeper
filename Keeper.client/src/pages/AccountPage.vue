@@ -36,7 +36,7 @@
   </div>
   <ActiveKeepModal />
 
-  <Modal id="editProfileModal">
+  <Modal id="editProfileModal" titleId="editProfileFormTitle">
     <template #header>
       Edit your account
     </template>
