@@ -6,7 +6,8 @@
     </button>
     <div v-else>
       <div class="dropdown dropstart my-2 my-lg-0">
-        <button type="button" class="btn border-0 selectable no-select" data-bs-toggle="dropdown" aria-expanded="false">
+        <button type="button" title="Open Menu" class="btn border-0 selectable no-select" data-bs-toggle="dropdown"
+          aria-expanded="false">
           <div v-if="account.picture || user.picture">
             <img :src="account.picture || user.picture" alt="account photo" height="40" class="profile-pic" />
           </div>
