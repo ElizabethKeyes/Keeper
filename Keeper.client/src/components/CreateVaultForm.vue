@@ -23,7 +23,7 @@
         <input type="checkbox" class="me-2" id="isPrivate" v-model="editable.isPrivate">
         <label for="isPrivate">Make Vault Private?</label>
       </div>
-      <p class="text-secondary mb-0">private vaults can only be seen by you</p>
+      <p class="my-gray-text mb-0">private vaults can only be seen by you</p>
     </div>
     <div class="d-flex justify-content-end">
       <button class="btn btn-dark">Create</button>
@@ -79,6 +79,10 @@ input {
   border-bottom: black 1px solid !important;
   border-radius: 0px;
   border-radius: 0px;
+}
+
+.my-gray-text {
+  color: #59727e
 }
 
 textarea {
