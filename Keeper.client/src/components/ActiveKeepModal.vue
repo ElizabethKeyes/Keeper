@@ -32,9 +32,9 @@
                   </select>
                   <button type="submit" class="btn save-btn text-light">save</button>
                 </form>
-                <small v-if="account.id" class="gray-text ms-3">Select a vault to
+                <p v-if="account.id" class="gray-text mb-0 ms-3">Select a vault to
                   save
-                  this keep</small>
+                  this keep</p>
               </div>
 
               <div class="d-flex align-items-center justify-content-end me-3 col-md-5 col-4 large-screen-name"
@@ -250,6 +250,10 @@ export default {
 
 .large-screen-name {
   display: block !important;
+}
+
+select:hover {
+  cursor: pointer;
 }
 
 @media screen and (max-width: 768px) {

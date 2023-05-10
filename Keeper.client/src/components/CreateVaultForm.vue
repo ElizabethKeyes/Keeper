@@ -19,11 +19,11 @@
       <label for="vaultDescription">Description</label>
     </div>
     <div class="d-flex flex-column align-items-end my-4">
-      <small class="text-secondary">Private Vaults can only be seen by you</small>
       <div class="d-flex">
         <input type="checkbox" class="me-2" id="isPrivate" v-model="editable.isPrivate">
         <label for="isPrivate">Make Vault Private?</label>
       </div>
+      <p class="text-secondary mb-0">private vaults can only be seen by you</p>
     </div>
     <div class="d-flex justify-content-end">
       <button class="btn btn-dark">Create</button>

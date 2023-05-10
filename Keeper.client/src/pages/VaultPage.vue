@@ -53,7 +53,7 @@ export default {
         let errorMessage = error.response.data
         if (errorMessage == "This vault is private!") {
           logger.error(error)
-          Pop.toast("That vault is private", "error")
+          Pop.toast("That vault is private", "error", "top")
           router.push({ name: "Home" })
         } else {
           logger.log(error)
@@ -70,7 +70,7 @@ export default {
         let errorMessage = error.response.data
         if (errorMessage == "This vault is private!") {
           logger.error(error)
-          Pop.toast("That vault is private", "error")
+          Pop.toast("That vault is private", "error", "top")
           router.push({ name: "Home" })
         } else {
           logger.log(error)
