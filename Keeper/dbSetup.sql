@@ -1,3 +1,4 @@
+-- Active: 1686351574594@@sandbox.cepjzptuhwhm.us-west-2.rds.amazonaws.com@3306@sandbox
 CREATE TABLE IF NOT EXISTS accounts(
   id VARCHAR(255) NOT NULL primary key COMMENT 'primary key',
   createdAt DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Time Created',
